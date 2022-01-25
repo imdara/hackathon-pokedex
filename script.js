@@ -59,8 +59,8 @@ myFn = (async () => {
 
   getData = (object) => {
     let name = object.name;
-    let image = object.sprites.front_default;
     let id = object.id;
+    let image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
     listOfPokemon.innerHTML += `
     <li class="card" onclick="selectid(${id})">
     <img class="card-img-top" src="${image}"/>
@@ -82,7 +82,7 @@ myFn = (async () => {
 
   const displayPopup = (object) => {
     let name = object.name;
-    let image = object.sprites.front_default;
+    let image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${object.id}.png`;
     let type = object.types.map(data => data.type.name);
     let abil = object.abilities.map(data => data.ability.name);
     let moves = object.moves.map(data => data.move.name);
