@@ -47,3 +47,32 @@ h1,h3{
 nav {
     text-align: center;
 }
+
+.popup {
+    display: flex;
+    width: 100vw;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#closeBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+@media (max-width: 500px) {
+    #searchBar {
+        width: 60vw;
+        height: 7vh;
+    }
+    #first {
+        height: 7vh;
+    }
+    #searchbtn {
+        height: 7vh;
+    }
+    #closeBtn {
+        height: 7vh;
+    }
+}

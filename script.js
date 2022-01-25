@@ -1,5 +1,5 @@
 document.querySelector("#bdy").innerHTML=`
-<h1 class="container">✨My Pokedex✨</h1><br>
+<h1 class="container">✨Pokedex App✨</h1><br>
 <div class="container" align="center" id="searchBox">
     <button type="button" id="first" class="btn btn-dark">⌂</button>
     <input type="text" id="searchBar" placeholder=" Search for the pokemon name here (eg: bulbasaur) "/>
@@ -59,25 +59,52 @@ myFn = (async () => {
   getData = (object) => {
     let name = object.name;
     let image = object.sprites.front_default;
+    let id = object.id;
+    listOfPokemon.innerHTML += `
+    <li class="card" onclick="selectid(${id})">
+    <img class="card-img-top" src="${image}"/>
+    <div class="card-body">
+    <h3 class="card-title">${id}. ${name}</h3>
+    </div>
+    </li>
+    `;
+    }
+
+  myFn();
+
+  const selectid = async (id) => { 
+      const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+      const res = await fetch(url);
+      const selectedIdData = await res.json();
+      displayPopup(selectedIdData);
+  };
+
+  const displayPopup = (object) => {
+    let name = object.name;
+    let image = object.sprites.front_default;
     let type = object.types.map(data => data.type.name);
     let abil = object.abilities.map(data => data.ability.name);
     let moves = object.moves.map(data => data.move.name);
     let wt = object.weight;
-listOfPokemon.innerHTML += `
-<li class="card">
-<img class="card-img-top" src="${image}"/>
-<div class="card-body">
-<h3 class="card-title">${object.id}. ${name}</h3>
-<p class="card-text">Weight: ${wt} kg</p>
-<p class="card-text">Abilities: ${abil}</p>
-<p class="card-text">Type: ${type}</p>
-<p class="card-text">Moves: ${moves}</p>
-</div>
-</li>
-`;
-  }
+    const htmlString = `<div class="popup">
+    <button id="closeBtn" class="btn btn-dark" onclick="closePopup()">←</button>
+    <div class="card">
+    <img class="card-img-top" src="${image}"/>
+    <div class="card-body">
+    <h3 class="card-title">${object.id}. ${name}</h3>
+    <p class="card-text">Weight: ${wt} kg</p>
+    <p class="card-text">Abilities: ${abil}</p>
+    <p class="card-text">Type: ${type}</p>
+    <p class="card-text">Moves: ${moves}</p>
+    </div>
+    </div>
+    `;
+    listOfPokemon.innerHTML = htmlString;
+    }
 
-  myFn();
+    const closePopup = () => {
+        myFn();
+    }
 
   searchbtn.addEventListener('click', async () => {
     const text = document.getElementById("searchBar").value.toLowerCase();
@@ -85,7 +112,6 @@ listOfPokemon.innerHTML += `
     listOfPokemon.innerHTML="";
     if (text.length<1){
         myFn();
-        // break;
     }
     try {
       for (let i = 1; i <= 180; i++) {
