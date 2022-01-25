@@ -33,7 +33,8 @@ const btn5 = document.querySelector('#btn5');
 const listOfPokemon = document.querySelector("#listofpokemon");
 
 myFn = (async () => {
-    document.querySelector("#result").innerHTML=
+    document.querySelector("#searchBar").value="";
+    document.querySelector("#result").innerHTML="";
     listOfPokemon.innerHTML="";
     try {
         firstItem = currentPage*9-8;
